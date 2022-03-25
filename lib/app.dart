@@ -2,7 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sarbaz_time/app_theme.dart';
 import 'package:sarbaz_time/config.dart';
-import 'package:sarbaz_time/page/home.dart';
+import 'package:sarbaz_time/page/homePage.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);

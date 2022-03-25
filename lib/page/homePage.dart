@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sarbaz_time/app_theme.dart';
 import 'package:sarbaz_time/config.dart';
+import 'package:sarbaz_time/page/home_view/forms.dart';
+import 'package:sarbaz_time/page/home_view/home.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -57,7 +59,9 @@ class _HomePageState extends ConsumerState<HomePage> with WindowListener {
     return NavigationBody(
       index: index.value,
       children: [
-        body(context),
+        // body(context),
+        const Home(),
+        const Forms(),
         // Center(child: Text("InputsPage")),
         // Center(child: Text("Forms")),
         // Center(child: Text("ColorsPage")),
@@ -135,6 +139,10 @@ class _HomePageState extends ConsumerState<HomePage> with WindowListener {
         PaneItem(
           icon: const Icon(FluentIcons.home),
           title: const Text('Home'),
+        ),
+        PaneItem(
+          icon: const Icon(FluentIcons.text_field),
+          title: const Text('Form'),
         ),
         // It doesn't look good when resizing from compact to open
         // PaneItemHeader(header: Text('User Interaction')),
