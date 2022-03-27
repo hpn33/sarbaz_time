@@ -17,6 +17,21 @@ class Home extends HookWidget {
     final totalMonthController =
         useTextEditingController(text: totalMonth.value.toString());
 
+    final finalDate = startDate.value.copy().addMonths(totalMonth.value);
+    final remainingDay = finalDate.distanceFrom(todayDate.value);
+
+    final passedDay = todayDate.value.distanceFrom(startDate.value);
+
+    final passedDayPercent = todayDate.value.distanceFrom(startDate.value) /
+        startDate.value
+            .copy()
+            .addMonths(totalMonth.value)
+            .distanceFrom(startDate.value) *
+        100;
+
+    final remaindedDayPercent = 100 - passedDayPercent;
+    //${remainingDay / startDate.value.copy().addMonths(totalMonth.value).distanceFrom(startDate.value) * 100
+
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('Home')),
       children: [
@@ -42,15 +57,46 @@ class Home extends HookWidget {
             'Total days: ${startDate.value.copy().addMonths(totalMonth.value).distanceFrom(startDate.value)}'),
 
         // pass days and percent of days
-        Text('Pass days: ${todayDate.value.distanceFrom(startDate.value)}'),
+        Text('Pass days: $passedDay ($passedDayPercent%)'),
 
         // remaining days and percent of days
-        Builder(builder: (context) {
-          final finalDate = startDate.value.copy().addMonths(totalMonth.value);
-          final remainingDay = finalDate.distanceFrom(todayDate.value);
+        Text('Remain days: $remainingDay ($remaindedDayPercent%)'),
 
-          return Text('Remaining days: $remainingDay');
-        }),
+        // prosess bar to show days
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[60],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            height: 10,
+            width: 100,
+            child: Row(
+              children: [
+                // passed
+                Expanded(
+                  flex: (passedDayPercent * 100).toInt(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[90],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    height: 10,
+                  ),
+                ),
+
+                // remainded
+                Expanded(
+                  flex: (remaindedDayPercent * 100).toInt(),
+                  child: Container(
+                      // height: 10,
+                      // color: Colors.yellow,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
