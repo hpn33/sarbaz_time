@@ -26,36 +26,26 @@ class Home extends HookWidget {
     final extraDaysController =
         useTextEditingController(text: extraDays.value.toString());
 
-    final lastDate = startDate.value.copy().addMonths(totalMonth.value);
+    final lastDateNormal = startDate.value.copy().addMonths(totalMonth.value);
 
-    final lastDateWithAll =
-        lastDate.addDays(-minesDays.value).addDays(extraDays.value);
+    final lastDateWithMines = lastDateNormal.copy().addDays(-minesDays.value);
+    final lastDateWithExtra = lastDateNormal.copy().addDays(extraDays.value);
 
-// start to end day with mines and extra days
-    final totalDays = startDate.value.distanceTo(lastDate);
+    final lastDateWithAll = lastDateNormal
+        .copy()
+        .addDays(-minesDays.value)
+        .addDays(extraDays.value);
+
+    final totalDaysNormal = startDate.value.distanceTo(lastDateNormal);
     final totalDaysWithAll = startDate.value.distanceTo(lastDateWithAll);
 
     final passedDay = todayDate.value.distanceFrom(startDate.value);
     final passedDayPercent =
         todayDate.value.distanceFrom(startDate.value) / totalDaysWithAll * 100;
 
-    final remainingDay = lastDateWithAll.distanceFrom(todayDate.value);
+    final remainingDayNormal = lastDateNormal.distanceFrom(todayDate.value);
+    final remainingDayWithAll = lastDateWithAll.distanceFrom(todayDate.value);
     final remaindedDayPercent = 100 - passedDayPercent;
-    //${remainingDay / startDate.value.copy().addMonths(totalMonth.value).distanceFrom(startDate.value) * 100
-
-    // final minesDayPercent = minesDays.value /
-    //     startDate.value
-    //         .copy()
-    //         .addMonths(totalMonth.value)
-    //         .distanceFrom(startDate.value) *
-    //     100;
-
-    // final extraDayPercent = extraDays.value /
-    //     startDate.value
-    //         .copy()
-    //         .addMonths(totalMonth.value)
-    //         .distanceFrom(startDate.value) *
-    //     100;
 
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('Home')),
@@ -117,13 +107,13 @@ class Home extends HookWidget {
 
         // total days
         Text(
-            'Total days: $totalDays + ${extraDays.value} - ${minesDays.value} = $totalDaysWithAll'),
+            'Total days: $totalDaysNormal + ${extraDays.value} - ${minesDays.value} = $totalDaysWithAll'),
 
         // pass days and percent of days
         Text('Pass days: $passedDay ($passedDayPercent%)'),
 
         // remaining days and percent of days
-        Text('Remain days: $remainingDay ($remaindedDayPercent%)'),
+        Text('Remain days: $remainingDayWithAll ($remaindedDayPercent%)'),
 
         // prosess bar to show days
         // Expanded(
@@ -183,35 +173,24 @@ class Home extends HookWidget {
 
                 // remainded
                 Expanded(
-                  flex: remainingDay,
+                  flex: remainingDayNormal - minesDays.value,
                   child: Container(
                       // height: 10,
                       // color: Colors.yellow,
                       ),
                 ),
 
-                // Expanded(
-                //   flex: (minesDayPercent * 100).toInt(),
-                //   child: Container(
-                //     height: 10,
-                //     decoration: BoxDecoration(
-                //       color: Colors.green['lighter'],
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //   ),
-                // ),
-
                 // mines
-                // Expanded(
-                //   flex: minesDays.value,
-                //   child: Container(
-                //     height: 10,
-                //     decoration: BoxDecoration(
-                //       color: Colors.grey[40],
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //   ),
-                // ),
+                Expanded(
+                  flex: minesDays.value,
+                  child: Container(
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[40],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -229,7 +208,7 @@ class Home extends HookWidget {
               children: [
                 // total - mines
                 Expanded(
-                  flex: totalDays - minesDays.value,
+                  flex: totalDaysNormal - minesDays.value,
                   child: Container(
                       // decoration: BoxDecoration(
                       //   color: Colors.grey[90],
@@ -266,6 +245,9 @@ class Home extends HookWidget {
             ),
           ),
         ),
+
+        Text(
+            "${lastDateWithAll.formatter.yyyy}/${lastDateWithAll.formatter.mm}/${lastDateWithAll.formatter.dd}"),
       ],
     );
   }
