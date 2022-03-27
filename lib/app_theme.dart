@@ -57,7 +57,7 @@ class AppTheme extends ChangeNotifier {
   //   );
   // }
 
-  TextDirection _textDirection = TextDirection.ltr;
+  TextDirection _textDirection = TextDirection.rtl;
   TextDirection get textDirection => _textDirection;
   set textDirection(TextDirection direction) {
     _textDirection = direction;
