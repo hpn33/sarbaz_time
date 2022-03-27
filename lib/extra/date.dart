@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:shamsi_date/shamsi_date.dart';
 
 void main() {
