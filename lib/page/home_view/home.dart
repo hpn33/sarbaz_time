@@ -28,9 +28,6 @@ class Home extends HookWidget {
 
     final lastDateNormal = startDate.value.copy().addMonths(totalMonth.value);
 
-    final lastDateWithMines = lastDateNormal.copy().addDays(-minesDays.value);
-    final lastDateWithExtra = lastDateNormal.copy().addDays(extraDays.value);
-
     final lastDateWithAll = lastDateNormal
         .copy()
         .addDays(-minesDays.value)
@@ -115,40 +112,109 @@ class Home extends HookWidget {
         // remaining days and percent of days
         Text('Remain days: $remainingDayWithAll ($remaindedDayPercent%)'),
 
-        // prosess bar to show days
-        // Expanded(
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       color: Colors.grey[40],
-        //       borderRadius: BorderRadius.circular(10),
-        //     ),
-        //     height: 10,
-        //     child: Row(
-        //       children: [
-        //         // total day
-        //         Expanded(
-        //           flex: totaldays - minesDays.value,
-        //           child: Container(
-        //               // height: 10,
-        //               // color: Colors.yellow,
-        //               ),
-        //         ),
+        // pure date
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[40],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            height: 10,
+            child: Row(
+              children: [
+                // total day
+                Expanded(
+                  flex: totalDaysNormal,
+                  child: Container(
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.purple['lightest'],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        (totalDaysNormal).toString(),
+                        style: const TextStyle(fontSize: 8),
+                      ),
+                    ),
+                  ),
+                ),
 
-        //         Expanded(
-        //           flex: extraDays.value,
-        //           child: Container(
-        //             height: 10,
-        //             decoration: BoxDecoration(
-        //               color: Colors.red['lighter'],
-        //               borderRadius: BorderRadius.circular(10),
-        //             ),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+                if (extraDays.value > minesDays.value)
+                  Expanded(
+                    flex: extraDays.value - minesDays.value,
+                    child: Center(
+                      child: Text(
+                        (extraDays.value - minesDays.value).toString(),
+                        style: const TextStyle(fontSize: 8),
+                      ),
+                    ),
+                  ),
 
+                // mines
+                // if (minesDays.value > extraDays.value)
+                //   Expanded(
+                //     flex: minesDays.value - extraDays.value,
+                //     child: Container(
+                //       height: 10,
+                //       decoration: BoxDecoration(
+                //         color: Colors.grey[40],
+                //         borderRadius: BorderRadius.circular(10),
+                //       ),
+                //     ),
+                //   ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 2),
+        // mines
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[40],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            height: 10,
+            child: Row(
+              children: [
+                // total - mines
+                Expanded(
+                  flex: totalDaysNormal - minesDays.value,
+                  child: Container(),
+                ),
+
+                // mines
+                Expanded(
+                  flex: minesDays.value,
+                  child: Container(
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.green['lighter'],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+
+                // extra
+                if (extraDays.value > minesDays.value)
+                  Expanded(
+                    flex: extraDays.value - minesDays.value,
+                    child: Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[40],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 2),
         // prosess bar to show days
         Expanded(
           child: Container(
@@ -168,35 +234,70 @@ class Home extends HookWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     height: 10,
+                    child: Center(
+                      child: Text(
+                        (passedDay).toString(),
+                        style: const TextStyle(fontSize: 8),
+                      ),
+                    ),
                   ),
                 ),
 
                 // remainded
                 Expanded(
                   flex: remainingDayNormal - minesDays.value,
-                  child: Container(
-                      // height: 10,
-                      // color: Colors.yellow,
-                      ),
-                ),
-
-                // mines
-                Expanded(
-                  flex: minesDays.value,
-                  child: Container(
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[40],
-                      borderRadius: BorderRadius.circular(10),
+                  child: Center(
+                    child: Text(
+                      (remainingDayNormal - minesDays.value).toString(),
+                      style: const TextStyle(fontSize: 8),
                     ),
                   ),
                 ),
+
+                // extra
+                if (extraDays.value > 0)
+                  Expanded(
+                    flex: extraDays.value,
+                    child: Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[90],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (extraDays.value).toString(),
+                          style: const TextStyle(fontSize: 8),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                // mines
+                if (extraDays.value < minesDays.value)
+                  Expanded(
+                    flex: minesDays.value - extraDays.value,
+                    child: Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[40],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (minesDays.value - extraDays.value).toString(),
+                          style: const TextStyle(fontSize: 8),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
         ),
 
-// prosess bar to show mines days
+        const SizedBox(height: 2),
+        // extra
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -206,41 +307,35 @@ class Home extends HookWidget {
             height: 10,
             child: Row(
               children: [
-                // total - mines
+                // total day
                 Expanded(
                   flex: totalDaysNormal - minesDays.value,
-                  child: Container(
-                      // decoration: BoxDecoration(
-                      //   color: Colors.grey[90],
-                      //   borderRadius: BorderRadius.circular(10),
-                      // ),
-                      // height: 10,
-                      ),
+                  child: Container(),
                 ),
 
-                // mines
                 Expanded(
-                  flex: minesDays.value,
+                  flex: extraDays.value,
                   child: Container(
                     height: 10,
                     decoration: BoxDecoration(
-                      color: Colors.green['lighter'],
+                      color: Colors.red['lighter'],
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
 
-                // extra
-                // Expanded(
-                // flex: extraDays.value,
-                // child: Container(
-                // height: 10,
-                // decoration: BoxDecoration(
-                //   color: Colors.green['lighter'],
-                //   borderRadius: BorderRadius.circular(10),
-                // ),
-                // ),
-                // ),
+                // mines
+                if (minesDays.value > extraDays.value)
+                  Expanded(
+                    flex: minesDays.value - extraDays.value,
+                    child: Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[40],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
