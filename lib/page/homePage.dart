@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sarbaz_time/app_theme.dart';
 import 'package:sarbaz_time/config.dart';
 import 'package:sarbaz_time/page/home_view/forms.dart';
-import 'package:sarbaz_time/page/home_view/home.dart';
+import 'package:sarbaz_time/page/home_view/home/home.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -254,47 +254,6 @@ class WindowButtons extends StatelessWidget {
       child: WindowCaption(
         brightness: theme.brightness,
         backgroundColor: Colors.transparent,
-      ),
-    );
-  }
-}
-
-class _LinkPaneItemAction extends PaneItem {
-  _LinkPaneItemAction({
-    required Widget icon,
-    required this.link,
-    title,
-    infoBadge,
-    focusNode,
-    autofocus = false,
-  }) : super(
-          icon: icon,
-          title: title,
-          infoBadge: infoBadge,
-          focusNode: focusNode,
-          autofocus: autofocus,
-        );
-
-  final String link;
-
-  @override
-  Widget build(
-    BuildContext context,
-    bool selected,
-    VoidCallback? onPressed, {
-    PaneDisplayMode? displayMode,
-    bool showTextOnTop = true,
-    bool? autofocus,
-  }) {
-    return Link(
-      uri: Uri.parse(link),
-      builder: (context, followLink) => super.build(
-        context,
-        selected,
-        followLink,
-        displayMode: displayMode,
-        showTextOnTop: showTextOnTop,
-        autofocus: autofocus,
       ),
     );
   }
