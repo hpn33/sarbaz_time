@@ -2,9 +2,11 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class TotalDayMonth extends HookWidget {
-  const TotalDayMonth(this.totalDays, {Key? key}) : super(key: key);
+  const TotalDayMonth(this.totalDays, {Key? key, this.title = "TotalDayMonth"})
+      : super(key: key);
 
   final ValueNotifier<int> totalDays;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +18,10 @@ class TotalDayMonth extends HookWidget {
     final monthsController =
         useTextEditingController(text: (totalDays.value ~/ 30).toString());
 
-    useEffect(() {
-      totalDayController.text = totalDays.value.toString();
-
-      return null;
-    }, [totalDays.value]);
-
     return Expanded(
       child: Column(
         children: [
-          const Text("Mines days"),
+          Text(title),
           TextBox(
             controller: totalDayController,
             onChanged: (value) {
@@ -37,23 +33,27 @@ class TotalDayMonth extends HookWidget {
           ),
           Row(
             children: [
-              const Text('Month'),
+              const Text('ماه'),
               Expanded(
                 child: TextBox(
                   controller: monthsController,
                   onChanged: (value) {
                     totalDays.value =
                         int.parse(value) * 30 + int.parse(daysController.text);
+
+                    totalDayController.text = totalDays.value.toString();
                   },
                 ),
               ),
-              const Text('Day'),
+              const Text('روز'),
               Expanded(
                 child: TextBox(
                   controller: daysController,
                   onChanged: (value) {
                     totalDays.value = int.parse(value) +
                         int.parse(monthsController.text) * 30;
+
+                    totalDayController.text = totalDays.value.toString();
                   },
                 ),
               ),
