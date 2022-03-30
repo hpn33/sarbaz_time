@@ -43,23 +43,24 @@ class Home extends HookWidget {
     final remaindedDayPercent = 100 - passedDayPercent;
 
     return ScaffoldPage.scrollable(
-      header: const PageHeader(title: Text('Home')),
+      header: const PageHeader(title: Text('محاسبه خدمت')),
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: DateInput('Start', startDate)),
+            Expanded(child: DateInput('تاریخ شروع', startDate)),
             const SizedBox(width: 20),
-            Expanded(child: DateInput("Today", todayDate)),
+            Expanded(child: DateInput("تاریخ الان", todayDate)),
           ],
         ),
+        const SizedBox(height: 16),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Column(
                 children: [
-                  const Text("Total Month"),
+                  const Text("مدت خدمت"),
                   TextBox(
                     controller: totalMonthController,
                     onChanged: (value) {
@@ -70,11 +71,12 @@ class Home extends HookWidget {
               ),
             ),
             const SizedBox(width: 20),
-            TotalDayMonth(minesDays),
+            TotalDayMonth(minesDays, title: "کسری"),
             const SizedBox(width: 20),
-            TotalDayMonth(extraDays),
+            TotalDayMonth(extraDays, title: "اضافه"),
           ],
         ),
+        const SizedBox(height: 16),
         StatusWidget(
           extraDays: extraDays.value,
           minesDays: minesDays.value,
@@ -85,12 +87,14 @@ class Home extends HookWidget {
           remainingDayWithAll: remainingDayWithAll,
           remaindedDayPercent: remaindedDayPercent,
         ),
+        const SizedBox(height: 16),
         VisualProgressView(
             extraDays: extraDays.value,
             minesDays: minesDays.value,
             totalDaysNormal: totalDaysNormal,
             passedDay: passedDay,
             remainingDayNormal: remainingDayNormal),
+        const SizedBox(height: 16),
         Text(
             "${lastDateWithAll.formatter.yyyy}/${lastDateWithAll.formatter.mm}/${lastDateWithAll.formatter.dd}"),
       ],

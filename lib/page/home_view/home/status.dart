@@ -25,16 +25,19 @@ class StatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // total days
         Text(
-            'Total days: $totalDaysNormal + $extraDays - $minesDays = $totalDaysWithAll'),
+            'کل روزها: $totalDaysNormal + $extraDays - $minesDays = $totalDaysWithAll'),
 
         // pass days and percent of days
-        Text('Pass days: $passedDay ($passedDayPercent%)'),
+        Text(
+            'روزهای گذشته: $passedDay (${passedDayPercent.toStringAsFixed(2)}%)'),
 
         // remaining days and percent of days
-        Text('Remain days: $remainingDayWithAll ($remaindedDayPercent%)'),
+        Text(
+            'روزهای باقی مانده: $remainingDayWithAll (${remaindedDayPercent.toStringAsFixed(2)}%)'),
       ],
     );
   }
