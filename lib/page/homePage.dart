@@ -6,7 +6,6 @@ import 'package:sarbaz_time/app_theme.dart';
 import 'package:sarbaz_time/config.dart';
 import 'package:sarbaz_time/page/home_view/forms.dart';
 import 'package:sarbaz_time/page/home_view/home/home.dart';
-import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'home_view/settings.dart';
@@ -126,13 +125,14 @@ class _HomePageState extends ConsumerState<HomePage> with WindowListener {
         ),
       ),
       displayMode: appTheme.displayMode,
-      indicatorBuilder: () {
+
+      indicator: () {
         switch (appTheme.indicator) {
           case NavigationIndicators.end:
-            return NavigationIndicator.end;
+            return const EndNavigationIndicator();
           case NavigationIndicators.sticky:
           default:
-            return NavigationIndicator.sticky;
+            return const StickyNavigationIndicator();
         }
       }(),
       items: [
