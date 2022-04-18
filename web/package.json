@@ -6,11 +6,12 @@
   "main": "main.js",
   "scripts": {
     "build": "electron-packager .",
+    "build-ia32": "electron-packager . --arch=ia32",
     "package": "electron-packager . --all",
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^13.1.7",
-    "electron-packager": "^15.3.0"
+    "electron": "^18.0.3",
+    "electron-packager": "^15.4.0"
   }
 }
